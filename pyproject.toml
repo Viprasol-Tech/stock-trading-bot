@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "stock-trading-bot"
-version = "0.1.0"
-description = "AI stock trading bot — cross-sectional momentum ranking and portfolio rebalancing. By Viprasol Tech."
+version = "0.2.0"
+description = "AI stock trading bot — multi-factor ranking, risk-parity sizing, volatility targeting, and backtesting. By Viprasol Tech."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
@@ -15,6 +15,10 @@ keywords = [
   "ai-stock-trading-bot",
   "stocks",
   "momentum",
+  "factor-investing",
+  "risk-parity",
+  "volatility-targeting",
+  "backtesting",
   "trading-bot",
   "portfolio",
   "quant",

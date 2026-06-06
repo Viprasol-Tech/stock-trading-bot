@@ -38,13 +38,34 @@ class Portfolio:
         if not targets:
             return
 
+        weights = {sym: 1.0 / len(targets) for sym in targets}
+        self.rebalance_weighted(weights, prices)
+
+    def rebalance_weighted(
+        self,
+        weights: Mapping[str, float],
+        prices: Mapping[str, float],
+    ) -> None:
+        """Rebalance to arbitrary target weights of current equity.
+
+        ``weights`` maps symbol -> fraction of equity to hold (need not sum to
+        1.0; a sum below 1.0 leaves the remainder in cash, enabling volatility
+        targeting / de-risking). Symbols absent from ``weights`` are liquidated.
+        """
+        for sym in list(self.shares):
+            if sym not in weights and self.shares[sym] > 0:
+                self.cash += self.shares[sym] * prices.get(sym, 0.0)
+                self.shares[sym] = 0.0
+
+        if not weights:
+            return
+
         equity = self.value(prices)
-        target_value = equity / len(targets)
-        for sym in targets:
+        for sym, weight in weights.items():
             price = prices.get(sym, 0.0)
             if price <= 0:
                 continue
-            desired_shares = target_value / price
+            desired_shares = (equity * weight) / price
             current = self.shares.get(sym, 0.0)
             self.cash -= (desired_shares - current) * price
             self.shares[sym] = desired_shares
