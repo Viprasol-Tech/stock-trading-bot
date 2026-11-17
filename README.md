@@ -82,9 +82,9 @@ config = StrategyConfig(
     top_n=3,
     lookback=21,
     factor_weights={"momentum": 1.0, "low_vol": 0.5},  # blended & z-scored
-    weighting=WeightingScheme.INVERSE_VOL,             # risk parity
+    weighting=WeightingScheme.INVERSE_VOL,  # risk parity
     schedule=RebalanceSchedule.MONTHLY,
-    target_vol=0.15,                                   # 15% annualized target
+    target_vol=0.15,  # 15% annualized target
 )
 
 result = run_strategy(universe, config)
